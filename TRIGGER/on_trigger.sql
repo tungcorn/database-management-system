@@ -30,7 +30,7 @@
     for update
     as
         begin
-            if exists (select TenLoaiHang
+            if exists (select 1
                        from inserted
                        where TenLoaiHang in (select TenLoaiHang
                                              from deleted))
@@ -39,11 +39,11 @@
                     rollback transaction
                 end
 
-             else if exists (select TenLoaiHang
-                           from inserted
-                           where TenLoaiHang in (select TenLoaiHang
-                                                 from LoaiHang
-                                                 )
+             else if exists (
+                           select 1
+                           from inserted i
+                           join LoaiHang l on i.TenLoaiHang = l.TenLoaiHang
+                           where i.IDLoaiHang != l.IDLoaiHang
                            )
                     begin
                         print 'Ten da ton tai'
@@ -51,8 +51,8 @@
                     end
         end
 
-        select TenLoaiHang from inserted
-        update LoaiHang set TenLoaiHang = N'tungcorn' where IDLoaiHang = 8
+
+        update LoaiHang set TenLoaiHang = N'tungcorn' where IDLoaiHang = 7
 
         drop trigger edit_hang
 
