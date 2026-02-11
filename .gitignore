@@ -9,3 +9,6 @@ out/
 *.bak
 *.mdf
 *.ldf
+
+# BTL PDFs
+BTL/*.pdf
